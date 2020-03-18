@@ -11,6 +11,10 @@ $(document).ready(function() {
           console.log(json);
           const w = 500;
           const h = 500;
+          console.log(" this is max " + d3.max(json, (d) => d.Year));
+          const xScale = d3.scaleLinear()
+                           .domain([d3.min(json, (d) => parseInt(d.Year)), d3.max(json, (d) => parseInt(d.Year))])
+                           .range([0, w])
 
           const svg = d3.select(".container")
                         .append("svg")
@@ -22,8 +26,8 @@ $(document).ready(function() {
               .enter()
               .append("circle")
               .attr("cx", (d, i) => {
-                console.log("this is i * 7" + i * 7);
-                return i * 7;
+                console.log("this is xScale for year" + xScale(d.Year));
+                return xScale(d.Year);
               })
               .attr("cy", (d, i) => {
                 console.log("this is i * 3" + i * 3);
