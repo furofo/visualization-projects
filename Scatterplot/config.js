@@ -4,10 +4,11 @@ $(document).ready(function() {
         let makeScatterPlot = function (json) {
           const w = 800;
           const h = 500;
-          const padding = {left: 70, top: 20, right: 50, bottom: 40};
+          const padding = {left: 70, top: 20, right: 90, bottom: 40};
           const xScale = d3.scaleLinear()
-                           .domain([d3.min(json, (d) => d.Year), d3.max(json, (d) => d.Year)])
-                           .range([padding.left, w - padding.left]);
+                           .domain([d3.min(json, (d) => d.Year) - 1, d3.max(json, (d) => d.Year)])
+                           .range([padding.left, w - padding.right])
+                         
           
           const yScale = d3.scaleLinear()
                             .domain([d3.min(json, (d) => parseInt(d.Seconds)), d3.max(json, (d) => parseInt(d.Seconds))])
@@ -39,11 +40,11 @@ $(document).ready(function() {
               .attr("r", 5);
 
             svg.append("g")
-              .attr("transform", "translate(-5," + (h - padding.bottom) + ")") // make x-axis
+              .attr("transform", "translate(0," + (h - padding.bottom) + ")") // make x-axis
               .attr("id", "x-axis")
               .call(xAxis);   
            svg.append("g")
-             .attr("transform", "translate(55," + 0 + ")") // make y -axis
+             .attr("transform", "translate(70," + 0 + ")") // make y -axis
              .attr("id", "y-axis")
              .call(yAxis);
         }
