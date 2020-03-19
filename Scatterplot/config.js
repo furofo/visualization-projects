@@ -30,7 +30,7 @@ $(document).ready(function() {
                 return xScale(d.Year);
               })
               .attr("cy", (d, i) => {
-                return yScale(d.Seconds) - 80})
+                return yScale(d.Seconds)})
               .attr("r", 5);
 
             svg.append("g")
