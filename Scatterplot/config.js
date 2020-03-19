@@ -1,14 +1,7 @@
-var json;
+
 $(document).ready(function() {  
-    
-    
-      
-        
-        fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json')
-      .then(response => response.json())
-      .then(data => {
-         let json = JSON.parse(JSON.stringify(data));
-          console.log(json);
+
+        let makeScatterPlot = function (json) {
           const w = 500;
           const h = 500;
           const padding = {left: 70, top: 20, right: 50, bottom: 100};
@@ -21,8 +14,9 @@ $(document).ready(function() {
                         .append("svg")
                         .attr("width", w)
                         .attr("height", h);
+          const g = svg.append("g");
 
-          svg.selectAll("circle")
+          g.selectAll("circle")
               .data(json)
               .enter()
               .append("circle")
@@ -34,6 +28,15 @@ $(document).ready(function() {
                 console.log("this is i * 3" + i * 3);
                 return h -(i * 3) - padding.bottom})
               .attr("r", 5);
+        }
+
+
+      fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json')
+      .then(response => response.json())
+      .then(data => {
+         let json = JSON.parse(JSON.stringify(data));
+          console.log(json);
+          makeScatterPlot(json);
       });
         
         
