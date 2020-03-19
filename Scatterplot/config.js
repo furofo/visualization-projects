@@ -6,7 +6,7 @@ $(document).ready(function() {
           const h = 500;
           const padding = {left: 70, top: 20, right: 90, bottom: 40};
           const xScale = d3.scaleLinear()
-                           .domain([d3.min(json, (d) => d.Year) - 1, d3.max(json, (d) => d.Year)])
+                           .domain([d3.min(json, (d) => d.Year) - 1, d3.max(json, (d) => d.Year) + 1])
                            .range([padding.left, w - padding.right])
                          
           
