@@ -8,7 +8,11 @@ $(document).ready(function() {
           console.log(" this is max " + d3.max(json, (d) => d.Year));
           const xScale = d3.scaleLinear()
                            .domain([d3.min(json, (d) => parseInt(d.Year)), d3.max(json, (d) => parseInt(d.Year))])
-                           .range([padding.left, w - padding.left])
+                           .range([padding.left, w - padding.left]);
+          
+          const yScale = d3.scaleLinear()
+                            .domain([d3.min(json, (d) => parseInt(d.Seconds)), d3.max(json, (d) => parseInt(d.Seconds))])
+                            .range([padding.top, h]);
 
           const svg = d3.select(".container")
                         .append("svg")
@@ -25,8 +29,7 @@ $(document).ready(function() {
                 return xScale(d.Year);
               })
               .attr("cy", (d, i) => {
-                console.log("this is i * 3" + i * 3);
-                return h -(i * 3) - padding.bottom})
+                return yScale(d.Seconds) - 80})
               .attr("r", 5);
         }
 
