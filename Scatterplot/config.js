@@ -11,10 +11,11 @@ $(document).ready(function() {
           console.log(json);
           const w = 500;
           const h = 500;
+          const padding = {left: 50, top: 20, right: 50, bottom: 200};
           console.log(" this is max " + d3.max(json, (d) => d.Year));
           const xScale = d3.scaleLinear()
                            .domain([d3.min(json, (d) => parseInt(d.Year)), d3.max(json, (d) => parseInt(d.Year))])
-                           .range([0, w])
+                           .range([padding.left, w - padding.left])
 
           const svg = d3.select(".container")
                         .append("svg")
