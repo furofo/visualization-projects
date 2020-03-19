@@ -1,4 +1,15 @@
-
+function timeConverter (seconds) {
+  let timeMinuesSeconds;
+  let hours = parseInt(seconds /60);
+  let minutes = seconds % 60;
+  if(minutes < 10) {
+    let tempMinute = minutes;
+    minutes = '';
+    minutes += '0';
+    minutes += tempMinute;
+  }
+  return hours + ":" + minutes;
+}
 $(document).ready(function() {  
 
         let makeScatterPlot = function (json) {
@@ -14,7 +25,12 @@ $(document).ready(function() {
                             .domain([d3.min(json, (d) => parseInt(d.Seconds)), d3.max(json, (d) => parseInt(d.Seconds))])
                             .range([padding.top, h - padding.bottom]);
           const xAxis = d3.axisBottom(xScale).tickFormat(d3.format("d"));
-          const yAxis =d3.axisLeft(yScale);   
+          const yAxis =d3.axisLeft(yScale).tickFormat(function(d, i) {
+            console.log("this is d" + d);
+           // let index = json.map(function(e) {return e.Seconds;}).indexOf(d);
+           console.log(" this is d modulus " + parseInt(d / 60));
+           return timeConverter(d);
+          });   
           const svg = d3.select(".container")
                         .append("svg")
                         .attr("width", w)
