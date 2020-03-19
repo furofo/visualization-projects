@@ -11,7 +11,7 @@ $(document).ready(function() {
           console.log(json);
           const w = 500;
           const h = 500;
-          const padding = {left: 50, top: 20, right: 50, bottom: 200};
+          const padding = {left: 70, top: 20, right: 50, bottom: 100};
           console.log(" this is max " + d3.max(json, (d) => d.Year));
           const xScale = d3.scaleLinear()
                            .domain([d3.min(json, (d) => parseInt(d.Year)), d3.max(json, (d) => parseInt(d.Year))])
@@ -32,7 +32,7 @@ $(document).ready(function() {
               })
               .attr("cy", (d, i) => {
                 console.log("this is i * 3" + i * 3);
-                return i * 3})
+                return h -(i * 3) - padding.bottom})
               .attr("r", 5);
       });
         
