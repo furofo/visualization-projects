@@ -21,10 +21,14 @@ function switchColors(json) {
   }
 }
 $(document).ready(function() {  
+  let box = document.querySelector('svg');
+  let width = box.clientWidth;
+  let height = box.clientHeight;
+  console.log(width + "this is width");
 
         let makeScatterPlot = function (json) {
-          const w = 800;
-          const h = 500;
+          const w = width;
+          const h = height;
           const padding = {left: 70, top: 20, right: 90, bottom: 40};
           const xScale = d3.scaleLinear()
                            .domain([d3.min(json, (d) => d.Year) - 1, d3.max(json, (d) => d.Year) + 1])
@@ -41,10 +45,8 @@ $(document).ready(function() {
            
            return timeConverter(d);
           });   
-          const svg = d3.select(".container")
-                        .append("svg")
-                        .attr("width", w)
-                        .attr("height", h);
+          const svg = d3.select("svg");
+                        
           const g = svg.append("g");
           const date = json.map(x => {
            return new Date(x.Year, 0);
@@ -52,8 +54,8 @@ $(document).ready(function() {
           let date1 = new Date(1997, 0);
          let legend = svg.append("g").attr("class", "legend")
                                      .attr("height", 100)
-                                     .attr("max-width", 100)
-          .                           attr('transform', 'translate(700,200)');
+                                     .attr("width", width / 7)
+          .                           attr('transform', 'translate(' + (width - 100) + ',200)');
     legend.append("text")
     .attr("class", "ylabel")
     .attr("text-anchor", "end") // append a y-axis label
@@ -70,17 +72,17 @@ $(document).ready(function() {
 
     legend.append("rect")
     .attr("x", 20)
-    .attr("y", -9)
+    .attr("y", -12)
     .attr("fill", "orange")
-    .attr("width", 10)
-    .attr("height", 10);
+    .attr("width", 12)
+    .attr("height", 12);
 
     legend.append("rect")
     .attr("x", 20)
     .attr("y", 9)
     .attr("fill", "blue")
-    .attr("width", 10)
-    .attr("height", 10);
+    .attr("width", 12)
+    .attr("height", 12);
 
 
           g.selectAll("circle")
