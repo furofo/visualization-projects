@@ -10,6 +10,16 @@ function timeConverter (seconds) {
   }
   return hours + ":" + minutes;
 }
+
+function switchColors(json) {
+  if(json.Doping == "") {
+    return "orange";
+  }
+
+  else {
+    return "blue";
+  }
+}
 $(document).ready(function() {  
 
         let makeScatterPlot = function (json) {
@@ -26,9 +36,9 @@ $(document).ready(function() {
                             .range([padding.top, h - padding.bottom]);
           const xAxis = d3.axisBottom(xScale).tickFormat(d3.format("d"));
           const yAxis =d3.axisLeft(yScale).tickFormat(function(d, i) {
-            console.log("this is d" + d);
+            
            // let index = json.map(function(e) {return e.Seconds;}).indexOf(d);
-           console.log(" this is d modulus " + parseInt(d / 60));
+           
            return timeConverter(d);
           });   
           const svg = d3.select(".container")
@@ -40,21 +50,24 @@ $(document).ready(function() {
            return new Date(x.Year, 0);
           });
           let date1 = new Date(1997, 0);
-          console.log("this is date 1" + date1);
-          console.log("this is date " + date[1].getFullYear());
+          ;
 
           g.selectAll("circle")
               .data(json)
               .enter()
               .append("circle")
               .attr("cx", (d, i) => {
-                console.log("this is Xcale " + (d.Year));
+                
                 return xScale(d.Year);
               })
               .attr("cy", (d, i) => {
                 return yScale(d.Seconds)})
               .attr("r", 5)
-              .attr("fill", "blue");
+              .attr("fill", (d,i) => {
+                console.log("this is d" + i);
+                console.log("this is switchcolors" + switchColors(json[i]));
+               return switchColors(json[i]);
+              });
 
             svg.append("g")
               .attr("transform", "translate(0," + (h - padding.bottom) + ")") // make x-axis
