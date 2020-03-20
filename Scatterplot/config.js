@@ -52,6 +52,16 @@ $(document).ready(function() {
            return new Date(x.Year, 0);
           });
           let date1 = new Date(1997, 0);
+
+          var tooltip = d3.select(".container")
+          .append("div")
+          .style("position", "absolute")  // asssigns a tooltip and sets display to hidden
+          .style("z-index", "10")
+          .style("visibility", "hidden")
+          .style("background", "#ddd")
+          .text("a simple tooltip")
+          .attr("id", "tooltip")
+          .attr("data-date", "hello");
          let legend = svg.append("g").attr("class", "legend")
                                      .attr("height", 100)
                                      .attr("width", width / 7)
@@ -100,7 +110,22 @@ $(document).ready(function() {
                return switchColors(json[i]);
               })
               .attr("stroke", "black")
-              .attr("stroke-width", 1);
+              .attr("stroke-width", 1)
+              .on("mouseover", function(d, i){
+                d3.select(this).attr( "fill", "red");
+                tooltip                                         // highlight bar orange and show tool-tip information
+                       .style("left", d3.event.pageX - 50 + "px")
+                       .style("top", d3.event.pageY - 70 + "px")
+                       .style("visibility", "visible")
+                       .style("display", "inline-block")
+                       .attr("data-date", json[i].Time)
+                       .html((json[i].Time) + "&nbsp"  + "Very Bueno");
+            })
+          .on("mouseout", function(d){  // unhighlight bar set back to blue color
+                       d3.select(this).attr("fill", (d,i) => {
+                        return switchColors(json[i]);
+                       })
+                       tooltip.style("display", "none");});
 
 
             svg.append("g")
