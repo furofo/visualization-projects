@@ -68,6 +68,21 @@ $(document).ready(function() {
     .attr("y", 20)
     .text("Doping Allegations");
 
+    legend.append("rect")
+    .attr("x", 20)
+    .attr("y", -9)
+    .attr("fill", "orange")
+    .attr("width", 10)
+    .attr("height", 10);
+
+    legend.append("rect")
+    .attr("x", 20)
+    .attr("y", 9)
+    .attr("fill", "blue")
+    .attr("width", 10)
+    .attr("height", 10);
+
+
           g.selectAll("circle")
               .data(json)
               .enter()
