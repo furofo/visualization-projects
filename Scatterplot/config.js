@@ -50,7 +50,23 @@ $(document).ready(function() {
            return new Date(x.Year, 0);
           });
           let date1 = new Date(1997, 0);
-          ;
+         let legend = svg.append("g").attr("class", "legend")
+                                     .attr("height", 100)
+                                     .attr("max-width", 100)
+          .                           attr('transform', 'translate(700,200)');
+    legend.append("text")
+    .attr("class", "ylabel")
+    .attr("text-anchor", "end") // append a y-axis label
+    .attr("x",10)
+    .attr("y", 0)
+    .text("No Doping Allegations");
+
+    legend.append("text")
+    .attr("class", "ylabel")
+    .attr("text-anchor", "end") // append a y-axis label
+    .attr("x",10)
+    .attr("y", 20)
+    .text("Doping Allegations");
 
           g.selectAll("circle")
               .data(json)
