@@ -64,10 +64,11 @@ $(document).ready(function() {
                 return yScale(d.Seconds)})
               .attr("r", 5)
               .attr("fill", (d,i) => {
-                console.log("this is d" + i);
-                console.log("this is switchcolors" + switchColors(json[i]));
                return switchColors(json[i]);
-              });
+              })
+              .attr("stroke", "black")
+              .attr("stroke-width", 1);
+
 
             svg.append("g")
               .attr("transform", "translate(0," + (h - padding.bottom) + ")") // make x-axis
