@@ -53,7 +53,8 @@ $(document).ready(function() {
               })
               .attr("cy", (d, i) => {
                 return yScale(d.Seconds)})
-              .attr("r", 5);
+              .attr("r", 5)
+              .attr("fill", "blue");
 
             svg.append("g")
               .attr("transform", "translate(0," + (h - padding.bottom) + ")") // make x-axis
