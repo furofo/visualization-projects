@@ -65,7 +65,8 @@ $(document).ready(function() {
          let legend = svg.append("g").attr("class", "legend")
                                      .attr("height", 100)
                                      .attr("width", width / 7)
-          .                           attr('transform', 'translate(' + (width - 100) + ',200)');
+                                    .attr('transform', 'translate(' + (width - 100) + ',200)')
+                                    .attr("id", "legend");
     legend.append("text")
     .attr("class", "ylabel")
     .attr("text-anchor", "end") // append a y-axis label
@@ -112,6 +113,7 @@ $(document).ready(function() {
               .attr("stroke", "black")
               .attr("doping", (d, i) => {return json[i].Doping})
               .attr("stroke-width", 1)
+              .attr("class", "dot")
               .on("mouseover", function(d, i){
                 d3.select(this).attr( "fill", "red");
                 tooltip                                         // highlight bar orange and show tool-tip information

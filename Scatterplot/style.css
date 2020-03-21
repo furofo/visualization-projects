@@ -1,9 +1,9 @@
-.title {
+#title {
     text-align: center;
     margin: auto;
     width: 80%;
 }
-.title h1 {
+#title h1 {
     margin-top: 2em;
 }
 
