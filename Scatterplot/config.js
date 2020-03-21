@@ -12,7 +12,7 @@ function timeConverter (seconds) {
 }
 
 function switchColors(json) {
-  if(json.Doping == "") {
+  if(json  == "") {
     return "orange";
   }
 
@@ -107,9 +107,10 @@ $(document).ready(function() {
                 return yScale(d.Seconds)})
               .attr("r", 5)
               .attr("fill", (d,i) => {
-               return switchColors(json[i]);
+               return switchColors(json[i].Doping);
               })
               .attr("stroke", "black")
+              .attr("doping", (d, i) => {return json[i].Doping})
               .attr("stroke-width", 1)
               .on("mouseover", function(d, i){
                 d3.select(this).attr( "fill", "red");
@@ -118,12 +119,20 @@ $(document).ready(function() {
                        .style("top", d3.event.pageY - 70 + "px")
                        .style("visibility", "visible")
                        .style("display", "inline-block")
-                       .attr("data-date", json[i].Time)
-                       .html((json[i].Time) + "&nbsp"  + "Very Bueno");
-            })
+                       .style("background", "#b3d5e0")
+                       .style("padding-left", "10px")
+                       .style("padding-right", "10px")
+                       .style("padding-bottom", "10px")
+                       .style("padding-top", "10px")
+                       .html("Name: " + json[i].Name + "<br />" + "Year: " + json[i].Year + " Time: " + json[i].Time 
+                       + "<br />" + "<br />" + json[i].Doping)
+                         })
           .on("mouseout", function(d){  // unhighlight bar set back to blue color
                        d3.select(this).attr("fill", (d,i) => {
-                        return switchColors(json[i]);
+                         console.log("this name " + d3.select(this).attr("doping"));
+                         console.log(i);
+                         
+                        return switchColors(d3.select(this).attr("doping"));
                        })
                        tooltip.style("display", "none");});
 
