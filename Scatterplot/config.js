@@ -118,7 +118,7 @@ $(document).ready(function() {
                 d3.select(this).attr( "fill", "red");
                 tooltip                                         // highlight bar orange and show tool-tip information
                        .style("left", d3.event.pageX - 50 + "px")
-                       .style("top", d3.event.pageY - 70 + "px")
+                       .style("top", d3.event.pageY - 125 + "px")
                        .style("visibility", "visible")
                        .style("display", "inline-block")
                        .style("background", "#b3d5e0")
