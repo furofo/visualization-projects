@@ -24,9 +24,10 @@ $(document).ready(function() {
   let box = document.querySelector('svg');
   let width = box.clientWidth;
   let height = box.clientHeight;
-  console.log(width + "this is width");
+  
 
         let makeScatterPlot = function (json) {
+          console.log(json);
           const w = width;
           const h = height;
           const padding = {left: 70, top: 20, right: 90, bottom: 40};
@@ -49,9 +50,11 @@ $(document).ready(function() {
                         
           const g = svg.append("g");
           const date = json.map(x => {
-           return new Date(x.Year, 0);
+           return new Date(0, 0, 1, 0, x.Time.slice(0, 2), x.Time.slice(3));
           });
-          let date1 = new Date(1997, 0);
+          console.log("this is date" + d3.max(date));
+          console.log("this is minDate" + d3.min(date));
+          console.log("this is functional min date " + d3.min(json, (d) => d.Time));
 
           var tooltip = d3.select(".container")
           .append("div")
