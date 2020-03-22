@@ -1,14 +1,14 @@
-function timeConverter (seconds) {
+function timeConverter (dateObj) {
   let timeMinuesSeconds;
-  let hours = parseInt(seconds /60);
-  let minutes = seconds % 60;
-  if(minutes < 10) {
-    let tempMinute = minutes;
-    minutes = '';
-    minutes += '0';
-    minutes += tempMinute;
+  let minutes = parseInt(dateObj.getMinutes());
+  let seconds= parseInt(dateObj.getSeconds());
+  if(seconds < 10) {
+    let tempMinute = seconds;
+    seconds = '';
+    seconds += '0';
+    seconds += tempMinute;
   }
-  return hours + ":" + minutes;
+  return minutes + ":" + seconds;
 }
 
 function switchColors(json) {
@@ -31,30 +31,31 @@ $(document).ready(function() {
           const w = width;
           const h = height;
           const padding = {left: 70, top: 20, right: 90, bottom: 40};
+          const date = json.map(x => {
+            return new Date(0, 0, 1, 0, x.Time.slice(0, 2), x.Time.slice(3));
+           });
+           console.log("this is date" + d3.max(date));
+           console.log("this is minDate" + d3.min(date));
+           console.log("this is functional min date " + d3.min(json, (d) => d.Time));
           const xScale = d3.scaleLinear()
                            .domain([d3.min(json, (d) => d.Year) - 1, d3.max(json, (d) => d.Year) + 1])
                            .range([padding.left, w - padding.right])
                          
           
-          const yScale = d3.scaleLinear()
-                            .domain([d3.min(json, (d) => parseInt(d.Seconds)), d3.max(json, (d) => parseInt(d.Seconds))])
+          const yScale = d3.scaleTime()
+                            .domain([d3.min(date), d3.max(date)])
                             .range([padding.top, h - padding.bottom]);
           const xAxis = d3.axisBottom(xScale).tickFormat(d3.format("d"));
           const yAxis =d3.axisLeft(yScale).tickFormat(function(d, i) {
             
            // let index = json.map(function(e) {return e.Seconds;}).indexOf(d);
-           
+           console.log("this is yaxis  d" + d); 
            return timeConverter(d);
           });   
           const svg = d3.select("svg");
                         
           const g = svg.append("g");
-          const date = json.map(x => {
-           return new Date(0, 0, 1, 0, x.Time.slice(0, 2), x.Time.slice(3));
-          });
-          console.log("this is date" + d3.max(date));
-          console.log("this is minDate" + d3.min(date));
-          console.log("this is functional min date " + d3.min(json, (d) => d.Time));
+          
 
           var tooltip = d3.select(".container")
           .append("div")
@@ -108,7 +109,7 @@ $(document).ready(function() {
                 return xScale(d.Year);
               })
               .attr("cy", (d, i) => {
-                return yScale(d.Seconds)})
+                return yScale(date[i])})
               .attr("r", 5)
               .attr("fill", (d,i) => {
                return switchColors(json[i].Doping);
