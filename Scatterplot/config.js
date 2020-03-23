@@ -151,6 +151,14 @@ $(document).ready(function() {
              .attr("transform", "translate(70," + 0 + ")") // make y -axis
              .attr("id", "y-axis")
              .call(yAxis);
+
+             svg.append("text")
+             .attr("class", "ylabel")
+             .attr("text-anchor", "end") // append a y-axis label
+             .attr("x",-80)
+             .attr("y", 20)
+             .text("Time In Minutes")
+             .attr("transform", "rotate(-90)");
         }
 
 
