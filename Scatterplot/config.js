@@ -34,9 +34,7 @@ $(document).ready(function() {
           const date = json.map(x => {
             return new Date(0, 0, 1, 0, x.Time.slice(0, 2), x.Time.slice(3));
            });
-           console.log("this is date" + d3.max(date));
-           console.log("this is minDate" + d3.min(date));
-           console.log("this is functional min date " + d3.min(json, (d) => d.Time));
+         
           const xScale = d3.scaleLinear()
                            .domain([d3.min(json, (d) => d.Year) - 1, d3.max(json, (d) => d.Year) + 1])
                            .range([padding.left, w - padding.right])
@@ -49,7 +47,7 @@ $(document).ready(function() {
           const yAxis =d3.axisLeft(yScale).tickFormat(function(d, i) {
             
            // let index = json.map(function(e) {return e.Seconds;}).indexOf(d);
-           console.log("this is yaxis  d" + d); 
+           
            return timeConverter(d);
           });   
           const svg = d3.select("svg");
@@ -65,7 +63,7 @@ $(document).ready(function() {
           .style("background", "#ddd")
           .text("a simple tooltip")
           .attr("id", "tooltip")
-          .attr("data-date", "hello");
+          .attr("data-year", "hello");
          let legend = svg.append("g").attr("class", "legend")
                                      .attr("height", 100)
                                      .attr("width", width / 7)
@@ -114,11 +112,18 @@ $(document).ready(function() {
               .attr("fill", (d,i) => {
                return switchColors(json[i].Doping);
               })
+              .attr("data-xvalue", (d,i) => {
+                return d.Year;
+              })
+              .attr("data-yvalue", (d,i) => {
+                return date[i];
+              })
               .attr("stroke", "black")
               .attr("doping", (d, i) => {return json[i].Doping})
               .attr("stroke-width", 1)
               .attr("class", "dot")
               .on("mouseover", function(d, i){
+                console.log("this is data year" + d3.select(this).attr("data-xvalue"));
                 d3.select(this).attr( "fill", "red");
                 tooltip                                         // highlight bar orange and show tool-tip information
                        .style("left", d3.event.pageX - 50 + "px")
@@ -130,13 +135,13 @@ $(document).ready(function() {
                        .style("padding-right", "10px")
                        .style("padding-bottom", "10px")
                        .style("padding-top", "10px")
+                       .attr("data-year", d3.select(this).attr("data-xvalue"))
                        .html("Name: " + json[i].Name + "<br />" + "Year: " + json[i].Year + " Time: " + json[i].Time 
                        + "<br />" + "<br />" + json[i].Doping)
                          })
           .on("mouseout", function(d){  // unhighlight bar set back to blue color
                        d3.select(this).attr("fill", (d,i) => {
-                         console.log("this name " + d3.select(this).attr("doping"));
-                         console.log(i);
+                         
                          
                         return switchColors(d3.select(this).attr("doping"));
                        })
@@ -166,7 +171,7 @@ $(document).ready(function() {
       .then(response => response.json())
       .then(data => {
          let json = JSON.parse(JSON.stringify(data));
-          console.log(json);
+        
           makeScatterPlot(json);
       });
         
